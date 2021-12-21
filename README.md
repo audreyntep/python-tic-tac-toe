@@ -11,8 +11,8 @@ Tic-tac-toe is a two-player puzzle game whose goal is to alignment signs in the 
 Only 2 players (in further update AI Player will be available).
 Each player is represented by a sign, commonly “X” and “O” are used.
 This version plays with fruits symbols : "apple" vs "grappes".
-![alt text](img/apple.jpg)
-![alt text](img/grappes.jpg)
+![apple](img/apple.png)
+![grappes](img/grappes.png)
 
 # Gameplay
 
