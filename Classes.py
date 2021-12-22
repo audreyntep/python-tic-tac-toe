@@ -14,11 +14,22 @@ class Round:
     
     def __init__(self):
         self.round = 0
+        self.current_player = 1
         # player 1 joue
         # on vérifie si il y a un gagnant ou si le nombre de tour <=5
         # player 2 joue
         # on vérifie si il y a un gagnant ou si nbre tour <=4
         print('%d round'% self.round)
+    
+    @property
+    def get_current_player(self):
+        return self.current_player
+
+    def set_current_player(self, player):
+        if player == 1:
+            self.current_player = 2
+        else:
+            self.current_player = 1
 
 
 
@@ -53,10 +64,11 @@ class Board:
             'window': Tk()
         }
 
-        self.APPLE = tkinter.PhotoImage(file="img/apple.png")
-        self.GRAPPES = tkinter.PhotoImage(file="img/grappes.png")
+        self.APPLE = tkinter.PhotoImage(file="img/apple.png") # player1
+        self.GRAPPES = tkinter.PhotoImage(file="img/grappes.png") # player2
         self.BLANK = tkinter.PhotoImage(file="img/blank.png")
 
+        self.message = self.set_message()
         self.GUI_gameboard()
 
         print('new board created!')
@@ -67,12 +79,28 @@ class Board:
     def get_grid(self):
         return self.board['grid'].get_length()
 
+    def set_message(self, player=None):
+        if player == 1 :
+            return 'GO apple!'
+        elif player == 2:
+            return 'GO grappes!'
+        else:
+            return "Let's GOoo!"
+    
+    def get_message(self):
+            return self.message
 
     def on_click(self, btn):
-        if btn.cget('image') == "pyimage3":
+        player = self.board['round'].get_current_player
+        if (player == 1 and btn.cget('image') == 'pyimage3'):
             btn.configure(image=self.APPLE)
-        elif (btn.cget('image') == "pyimage1" or btn.cget('image') == "pyimage2"):
-            btn.configure(image=self.BLANK)
+        elif (player == 2 and btn.cget('image') == 'pyimage3'):
+            btn.configure(image=self.GRAPPES)
+        self.board['round'].set_current_player(player)
+        self.set_message(player)
+        
+    def get_message_label(self, gameboard):
+        return tkinter.Label(gameboard, text=self.get_message(), bg="#5cc7b2", font=14, pady=10).pack(side='top', fill="x")
 
     def GUI_gameboard(self):
 
@@ -90,7 +118,8 @@ class Board:
         
         # Window content
         tkinter.Label(gameboard, text="Tic Tac Toe", font=("Courrier", 18, "bold"), pady=20).pack(side='top', fill="x")
-        message = tkinter.Label(gameboard, text="Apple GO!", bg="#5cc7b2", font=14, pady=10).pack(side='top', fill="x")
+
+        self.get_message_label(gameboard)
         
         frame = tkinter.Frame(gameboard, bg="yellow", height=window_dimension-20)
 
