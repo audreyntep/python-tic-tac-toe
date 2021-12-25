@@ -1,9 +1,13 @@
 # coding UTF-8
-from Classes import Board
 from tkinter import *
+from Classes import Game, GUI_Gameboard
+
+# instantiating a new game
+tic_tac_toe = Game()
+
+# instantiating the gameboard graphic user interface
+interface = GUI_Gameboard(tic_tac_toe)
 
 
-# instantiating a new board
-board = Board()
-# looping on tkinter object
-board.window().mainloop()
+
+
